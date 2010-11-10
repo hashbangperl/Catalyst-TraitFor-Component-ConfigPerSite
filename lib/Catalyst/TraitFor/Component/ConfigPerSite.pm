@@ -8,7 +8,16 @@ Catalyst::TraitFor::Component::ConfigPerSite - Extend Catalyst Components to sha
 
 =head1 DESCRIPTIONS
 
+This Role or Trait allows you to share an application between sites, clients, etc
+with different configuration for templates and databases (and possibly other parts).
+
+Compose this role into your trait to extend a catalyst component such as a model or view
+
 =head1 SYNOPSIS
+
+use Moose::Role;
+
+with qw( Catalyst::Component::InstancePerContext Catalyst::TraitFor::Component::ConfigPerSite);
 
 =head1 VERSION
 
@@ -33,6 +42,13 @@ my $shared_config;
 
 has '_site_config' => ( is  => 'ro' );
 
+=head1 METHODS
+
+=head2 get_site_config
+
+return (possibly cached) site-specific configuration based on host and path for this request
+
+=cut
 
 sub get_site_config {
     my ($self, $c) = @_;
@@ -56,7 +72,7 @@ sub get_site_config {
 		    if ( $site_config = $host_config->{"/$match_path"} || $host_config->{"$match_path"}) {
 			last;
 		    }
-		}	    
+		}
 	    } else {
 		($site_config) = values %$host_config
 	    }
@@ -66,8 +82,31 @@ sub get_site_config {
 	}
 	$cache->set( $cache_key, $site_config, "10 minutes" );
     }
-    
     return $site_config;
 }
+
+
+=head1 SEE ALSO
+
+Catalyst::Component::InstancePerContext
+
+Catalyst::TraitFor::View::TT::ConfigPerSite
+
+Moose::Role
+
+=head1 AUTHOR
+
+Aaron Trevena, E<lt>aaron@aarontrevena.co.ukE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2010 by Aaron Trevena
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
+at your option, any later version of Perl 5 you may have available.
+
+
+=cut
 
 1;
