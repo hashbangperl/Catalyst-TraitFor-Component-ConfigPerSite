@@ -1,10 +1,10 @@
-package Catalyst::TraitFor::View::TT::SharedApplication;
+package Catalyst::TraitFor::View::TT::ConfigPerSite;
 use strict;
 use warnings;
 
 =head1 NAME
 
-Catalyst::TraitFor::View::TT::ShareApplication - Extend Catalyst TT View to work with multiple sites at once
+Catalyst::TraitFor::View::TT::ConfigPerSite - Extend Catalyst TT View to work with multiple sites at once
 
 =head1 SYNOPSIS
 
@@ -14,7 +14,7 @@ use Moose;
 
 extends 'Catalyst::View::TT::Schema'; 
 
-with qw(Catalyst::TraitFor::View::TT::ShareApplication)
+with qw(Catalyst::TraitFor::View::TT::ConfigPerSite)
 
 =head1 DESCRIPTION
 
