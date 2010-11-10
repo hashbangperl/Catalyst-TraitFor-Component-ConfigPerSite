@@ -29,7 +29,7 @@ my $cache = new Cache::SizeAwareMemoryCache( { 'namespace' => 'ConfigPerSite',
 
 use Data::Dumper;
 
-my $shared_application_configuration;
+my $shared_config;
 
 has '_site_config' => ( is  => 'ro' );
 
