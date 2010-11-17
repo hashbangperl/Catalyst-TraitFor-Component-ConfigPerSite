@@ -139,9 +139,7 @@ Return the total number of comments on this post
 
 sub comment_count {
 	my ( $self ) = @_;
-	
-	return undef unless $self->discussion;
-	return $self->discussion->comments->count || 0;
+	return 0;
 }
 
 
