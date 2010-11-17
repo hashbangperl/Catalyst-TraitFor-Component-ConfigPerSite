@@ -34,8 +34,6 @@ sub base : Chained( '/' ) : PathPart( 'blog' ) : CaptureArgs( 0 ) {
 	
 	# Stash the name of the controller
 	$c->stash->{ controller } = 'Blog';
-	
-	$c->stash->{ shared_content } =  $c->controller('Root')->get_global_shared_content($c);
 }
 
 
