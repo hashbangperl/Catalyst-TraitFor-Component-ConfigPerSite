@@ -2,7 +2,3 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/Catalyst-TraitFor-Component-ConfigPerSite.t
-lib/Catalyst/TraitFor/Component/ConfigPerSite.pm
-lib/Catalyst/TraitFor/Model/DBIC.pm
-lib/Catalyst/TraitFor/View/TT.pm
