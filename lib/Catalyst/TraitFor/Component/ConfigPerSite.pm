@@ -29,6 +29,7 @@ our $VERSION = '0.01';
 
 use Moose::Role;
 use MRO::Compat;
+use Data::Dumper;
 
 use Cache::SizeAwareMemoryCache;
 
@@ -78,10 +79,15 @@ sub get_site_config {
 	    }
 	} else {
 	    # if none found fall back to top level config for DBIC, and warn
-	    $site_config = { name => 'top_level_fallback', TT => {}, DBIC => { $c->config->{'Model::DB'} } }
+	    my ($TT_view_name) = grep (m/View::(HTML|TT)/, keys %{$c->config});
+	    $site_config = { name => 'top_level_fallback', TT => $c->config->{$TT_view_name}, DBIC => $c->config->{'Model::DB'} }
 	}
 	$cache->set( $cache_key, $site_config, "10 minutes" );
     }
+
+#    warn Dumper (site_config =>$site_config);
+#    warn Dumper (db => $c->config->{'Model::DB'});
+
     return $site_config;
 }
 
