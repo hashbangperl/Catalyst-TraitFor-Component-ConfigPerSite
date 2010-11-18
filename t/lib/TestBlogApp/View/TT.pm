@@ -1,13 +1,9 @@
 package TestBlogApp::View::TT;
 
-use base qw/Catalyst::View::TT/;
+use Moose;
 
-use Cwd;
+extends 'Catalyst::View::TT'; 
 
-__PACKAGE__->config(
-    TEMPLATE_EXTENSION => '.tt',
-    INCLUDE_PATH=>[ 't/templates'  ],
-    WRAPPER=> 'site-wrapper.tt',
-    );
+with qw(Catalyst::TraitFor::View::TT::ConfigPerSite)
 
 1;
