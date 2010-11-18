@@ -12,9 +12,9 @@ package MyApp::View::TT;
 
 use Moose;
 
-extends 'Catalyst::View::TT::Schema'; 
+extends 'Catalyst::View::TT'; 
 
-with qw(Catalyst::TraitFor::View::TT::ConfigPerSite)
+with qw(Catalyst::TraitFor::View::TT::ConfigPerSite);
 
 =head1 DESCRIPTION
 
