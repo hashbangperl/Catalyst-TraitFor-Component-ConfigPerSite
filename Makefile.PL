@@ -7,7 +7,10 @@ WriteMakefile(
     PREREQ_PM         => {
 			  Catalyst => 0,
 			  Moose => 0,
-			  Cache::Cache => 0
+			  Cache::Cache => 0,
+			  Test::Pod => 0,
+			  Test::Pod::Coverage => 0,
+			  Test::HTML::Form => 0,
                          }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
        (AUTHOR         => 'Aaron Trevena <teejay@cpan.org>') : ()),
