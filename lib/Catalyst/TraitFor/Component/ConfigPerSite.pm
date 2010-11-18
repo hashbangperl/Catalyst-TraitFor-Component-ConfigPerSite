@@ -54,18 +54,22 @@ return (possibly cached) site-specific configuration based on host and path for 
 sub get_site_config {
     my ($self, $c) = @_;
 
-    $shared_config ||= $c->config->{'Model::SharedApplication'};
+    $shared_config ||= $c->config->{'TraitFor::Component::ConfigPerSite'};
 
     # get configuration from host and/or path
     my $req = $c->request;
-    my $host = $req->header('host');
+    my $host = $req->uri->host;
     my $path = $req->uri->path;
+
+#    warn "host : $host, path $path\n";
 
     my $cache_key = $host.$path;
     my $site_config = $cache->get( $cache_key );
+    my ($TT_view_name) = grep (m/View::(HTML|TT)/, keys %{$c->config}, 'View::HTML');
 
     if ( not defined $site_config ) {
 	if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
+# 	    warn "host config : $host_config\n", Dumper(host_config=>$host_config);
 	    if (scalar keys %$host_config > 1) {
 		my @path_parts = split(/\/+/, $path);
 		while (my $last_path_part = pop(@path_parts)) {
@@ -74,12 +78,15 @@ sub get_site_config {
 			last;
 		    }
 		}
+		$site_config ||= $host_config->{ALL} || $host_config;
 	    } else {
-		($site_config) = values %$host_config
+		($site_config) = values %$host_config;
 	    }
+	    $site_config->{name} = "host:$host";
+	    $site_config->{TT} = $site_config->{$TT_view_name};
+	    $site_config->{DBIC} = $site_config->{'Model::DB'};
 	} else {
 	    # if none found fall back to top level config for DBIC, and warn
-	    my ($TT_view_name) = grep (m/View::(HTML|TT)/, keys %{$c->config});
 	    $site_config = { name => 'top_level_fallback', TT => $c->config->{$TT_view_name}, DBIC => $c->config->{'Model::DB'} }
 	}
 	$cache->set( $cache_key, $site_config, "10 minutes" );
