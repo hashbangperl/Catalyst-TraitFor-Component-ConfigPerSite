@@ -18,7 +18,7 @@ unless(ok($r->is_success, 'got main blog page ok')) {
     }
 }
 
-title_matches($r,qr/Recent posts\s-\sShinySite/,'title matches');
+title_matches($r,qr/Recent posts\s-\sTestBlog/,'title matches');
 
 tag_matches($r, 'p', { _content => qr/Lorem\sIpsum\setc/ }, 'main content appears as expected' );
 
