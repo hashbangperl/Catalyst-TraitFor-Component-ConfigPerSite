@@ -27,6 +27,8 @@ with qw( Catalyst::Component::InstancePerContext Catalyst::TraitFor::Component::
 
 use MRO::Compat;
 
+use Data::Dumper;
+
 =head1 METHODS
 
 =head2 build_per_context_instance
@@ -37,7 +39,7 @@ our $instances = {};
 
 sub build_per_context_instance {
     my ($self,$c,%args) = @_;
-    my $site_config = $c->shared_application;
+    my $site_config = $self->get_site_config($c);
 
     if ( $instances->{$site_config->{name}} ) {
 	return $instances->{$site_config->{name}};
@@ -46,10 +48,10 @@ sub build_per_context_instance {
     # Slightly evil - we use hash/array flattening side-effect in TT View constructor to inject/overwrite with site specific config 
     foreach my $key ( keys %{$site_config->{TT}} ) {
 	next if ($key eq 'name');
-	$args{$key} = $site_config->{$key};
+	$args{$key} = $site_config->{TT}{$key};
     }
 
-    my $new = $self->new($c, %args);
+    my $new = $self->new($c, \%args);
     $instances->{$site_config->{name}} = $new;
 
     return $new;
