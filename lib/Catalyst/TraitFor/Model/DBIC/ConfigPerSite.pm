@@ -14,7 +14,7 @@ use Moose;
 
 extends 'Catalyst::Model::DBIC::Schema'; 
 
-with qw(Catalyst::TraitFor::Model::DBIC::ConfigPerSite)
+with qw(Catalyst::TraitFor::Model::DBIC::ConfigPerSite);
 
 =head1 DESCRIPTION
 
