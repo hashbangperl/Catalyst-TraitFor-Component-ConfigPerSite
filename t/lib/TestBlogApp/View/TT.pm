@@ -4,6 +4,6 @@ use Moose;
 
 extends 'Catalyst::View::TT'; 
 
-with qw(Catalyst::TraitFor::View::TT::ConfigPerSite)
+with qw(Catalyst::TraitFor::View::TT::ConfigPerSite);
 
 1;
