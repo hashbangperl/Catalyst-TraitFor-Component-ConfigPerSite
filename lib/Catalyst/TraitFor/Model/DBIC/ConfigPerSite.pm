@@ -35,9 +35,7 @@ our $instances = {};
 
 sub build_per_context_instance {
     my ($self, $c) = @_;
-    my $db_name = $c->session->{db_name};
-
-    my $site_config = $self->_get_site_config;
+    my $site_config = $self->get_site_config($c);
 
     if ( $instances->{$site_config->{name}} ) {
 	return $instances->{$site_config->{name}};
