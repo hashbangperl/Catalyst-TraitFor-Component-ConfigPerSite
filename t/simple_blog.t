@@ -3,7 +3,9 @@ use HTTP::Request;
 use HTTP::Request::Common;
 use Test::HTML::Form;
 
+use lib qw(t/lib);
 use Catalyst::Test qw(TestBlogApp);
+
 
 my $main_url = '/blog';
 my $hr = HTTP::Request->new('GET', $main_url);
