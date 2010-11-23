@@ -35,16 +35,19 @@ our $instances = {};
 
 sub build_per_context_instance {
     my ($self, $c) = @_;
-    my $site_config = $self->get_site_config($c);
+    my $config = $self->get_component_config($c);
 
-    if ( $instances->{$site_config->{name}} ) {
-	return $instances->{$site_config->{name}};
+    my $instance_cache_key = ref($self).$config->{site_name};
+
+    if ( $instances->{$instance_cache_key} ) {
+	return $instances->{$instance_cache_key};
     }
 
-    my @connect_info = ( @{$site_config->{DBIC}{connect_info}}{qw/dsn user password/});
+    my @connect_info = ( @{$config->{connect_info}}{qw/dsn user password/});
     my $new = bless({ %$self }, ref($self));
+    $new->config($config);
     $new->schema($self->schema->connect(@connect_info));
-    $instances->{$site_config->{name}} = $new;
+    $instances->{$instance_cache_key} = $new;
 
     return $new;
 }
