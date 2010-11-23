@@ -41,8 +41,10 @@ sub build_per_context_instance {
     my ($self,$c,%args) = @_;
     my $config = $self->get_component_config($c);
 
-    if ( $instances->{$config->{site_name}} ) {
-	return $instances->{$config->{site_name}};
+    my $instance_cache_key = ref($self).$config->{site_name};
+
+    if ( $instances->{$instance_cache_key} ) {
+	return $instances->{$instance_cache_key};
     }
 
     # Slightly evil - we use hash/array flattening side-effect in TT View constructor to inject/overwrite with site specific config 
@@ -52,7 +54,8 @@ sub build_per_context_instance {
     }
 
     my $new = $self->new($c, \%args);
-    $instances->{$config->{site_name}} = $new;
+    
+    $instances->{$instance_cache_key} = $new;
 
     return $new;
 }
