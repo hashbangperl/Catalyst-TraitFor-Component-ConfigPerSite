@@ -1,5 +1,10 @@
 Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite.
 
+0.02  Tue Nov 23
+       - now inherits top level configuration sections (but not configuration within sections)
+       - replaced hardcoded/pattern matched component names in code
+       - only get component configuration in components
+
 0.01  Wed Nov 10 23:10:25 2010
 	- original version;
 
