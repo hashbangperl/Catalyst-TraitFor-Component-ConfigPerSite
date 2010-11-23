@@ -119,12 +119,23 @@ sub get_site_config {
 		($site_config) = values %$host_config;
 	    }
 	    $site_config->{site_name} = "host:$host";
-       
+
+	    # inherit top level config where not over-ridden
+	    my $top_level_config = $c->config;
+	    foreach my $key (keys %$top_level_config) {
+		unless (defined $site_config->{$key}) {
+		    $site_config->{$key} = $top_level_config->{$key};
+		}
+	    }
+
 	} else {
 	    # if none found fall back to top level config for DBIC, and warn
 	    $site_config = { site_name => 'top_level_fallback', %{$c->config} };
 	    carp "falling back to top level config" if ($c->debug);
 	}
+
+
+
 	$cache->set( $cache_key, $site_config, "10 minutes" );
     }
 
@@ -143,10 +154,16 @@ my $config = $self->get_component_config;
 sub get_component_config {
     my ($self, $c) = @_;
     my $component_name = $self->catalyst_component_name;
+    warn "component name : $component_name\n";
 
     my $site_config = $self->get_site_config($c);
+    my $appname = $site_config->{name}.'::';
+    $component_name =~ s/$appname//;
+    warn Dumper(site_config => $site_config);
     my $component_config = $site_config->{$component_name};
     $component_config->{site_name} = $site_config->{site_name};
+
+    warn Dumper(component_config => $component_config);
 
     return $component_config;
 }
