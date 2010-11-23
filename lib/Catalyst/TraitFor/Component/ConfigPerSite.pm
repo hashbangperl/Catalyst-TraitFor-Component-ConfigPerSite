@@ -59,11 +59,11 @@ default_view TT
 
 =head1 VERSION
 
-0.01
+0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use Moose::Role;
 use MRO::Compat;
