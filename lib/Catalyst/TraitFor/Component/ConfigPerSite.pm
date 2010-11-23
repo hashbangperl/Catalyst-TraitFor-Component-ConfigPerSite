@@ -1,6 +1,7 @@
 package Catalyst::TraitFor::Component::ConfigPerSite;
 use strict;
 use warnings;
+use Carp qw(carp);
 
 =head1 NAME
 
@@ -15,9 +16,46 @@ Compose this role into your trait to extend a catalyst component such as a model
 
 =head1 SYNOPSIS
 
-use Moose::Role;
+in testblogapp.conf:
 
-with qw( Catalyst::Component::InstancePerContext Catalyst::TraitFor::Component::ConfigPerSite);
+name   TestBlogApp
+site_name    TestBlog
+default_view TT
+
+<Model::DB>
+        schema_class TestBlogApp::Schema
+        <connect_info>
+                      dsn dbi:SQLite:dbname=t/test.db
+                      user username
+                      password password
+        </connect_info>
+</Model::DB>
+
+<View::TT>
+        TEMPLATE_EXTENSION .tt
+        WRAPPER            site-wrapper.tt
+        INCLUDE_PATH       t/templates
+</View::TT>
+
+<TraitFor::Component::ConfigPerSite>
+ <foo.bar>
+   <Model::DB>
+        schema_class TestBlogApp::Schema
+        <connect_info>
+                      dsn dbi:SQLite:dbname=t/test2.db
+                      user username
+                      password password
+        </connect_info>
+   </Model::DB>
+
+   <View::TT>
+        TEMPLATE_EXTENSION .tt
+        WRAPPER            site-wrapper.tt
+        INCLUDE_PATH       t/more_templates
+   </View::TT>
+
+ </foo.bar>
+</TraitFor::Component::ConfigPerSite>
 
 =head1 VERSION
 
@@ -49,6 +87,8 @@ has '_site_config' => ( is  => 'ro' );
 
 return (possibly cached) site-specific configuration based on host and path for this request
 
+my $site_config = $self->get_site_config($c);
+
 =cut
 
 sub get_site_config {
@@ -61,15 +101,11 @@ sub get_site_config {
     my $host = $req->uri->host;
     my $path = $req->uri->path;
 
-#    warn "host : $host, path $path\n";
-
     my $cache_key = $host.$path;
     my $site_config = $cache->get( $cache_key );
-    my ($TT_view_name) = grep (m/View::(HTML|TT)/, keys %{$c->config}, 'View::HTML');
 
     if ( not defined $site_config ) {
 	if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
-# 	    warn "host config : $host_config\n", Dumper(host_config=>$host_config);
 	    if (scalar keys %$host_config > 1) {
 		my @path_parts = split(/\/+/, $path);
 		while (my $last_path_part = pop(@path_parts)) {
@@ -82,20 +118,37 @@ sub get_site_config {
 	    } else {
 		($site_config) = values %$host_config;
 	    }
-	    $site_config->{name} = "host:$host";
-	    $site_config->{TT} = $site_config->{$TT_view_name};
-	    $site_config->{DBIC} = $site_config->{'Model::DB'};
+	    $site_config->{site_name} = "host:$host";
+       
 	} else {
 	    # if none found fall back to top level config for DBIC, and warn
-	    $site_config = { name => 'top_level_fallback', TT => $c->config->{$TT_view_name}, DBIC => $c->config->{'Model::DB'} }
+	    $site_config = { site_name => 'top_level_fallback', %{$c->config} };
+	    carp "falling back to top level config" if ($c->debug);
 	}
 	$cache->set( $cache_key, $site_config, "10 minutes" );
     }
 
-#    warn Dumper (site_config =>$site_config);
-#    warn Dumper (db => $c->config->{'Model::DB'});
 
     return $site_config;
+}
+
+=head1 get_component_config
+
+return appropriate configuration for this component for this site
+
+my $config = $self->get_component_config;
+
+=cut
+
+sub get_component_config {
+    my ($self, $c) = @_;
+    my $component_name = $self->catalyst_component_name;
+
+    my $site_config = $self->get_site_config($c);
+    my $component_config = $site_config->{$component_name};
+    $component_config->{site_name} = $site_config->{site_name};
+
+    return $component_config;
 }
 
 
