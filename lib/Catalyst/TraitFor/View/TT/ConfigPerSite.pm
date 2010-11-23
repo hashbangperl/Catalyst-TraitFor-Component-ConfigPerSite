@@ -39,20 +39,20 @@ our $instances = {};
 
 sub build_per_context_instance {
     my ($self,$c,%args) = @_;
-    my $site_config = $self->get_site_config($c);
+    my $config = $self->get_component_config($c);
 
-    if ( $instances->{$site_config->{name}} ) {
-	return $instances->{$site_config->{name}};
+    if ( $instances->{$config->{site_name}} ) {
+	return $instances->{$config->{site_name}};
     }
 
     # Slightly evil - we use hash/array flattening side-effect in TT View constructor to inject/overwrite with site specific config 
-    foreach my $key ( keys %{$site_config->{TT}} ) {
-	next if ($key eq 'name');
-	$args{$key} = $site_config->{TT}{$key};
+    foreach my $key ( keys %$config ) {
+	next if ($key eq 'site_name');
+	$args{$key} = $config->{$key};
     }
 
     my $new = $self->new($c, \%args);
-    $instances->{$site_config->{name}} = $new;
+    $instances->{$config->{site_name}} = $new;
 
     return $new;
 }
