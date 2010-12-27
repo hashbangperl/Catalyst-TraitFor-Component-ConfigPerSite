@@ -1,7 +1,7 @@
 package Catalyst::TraitFor::Component::ConfigPerSite;
 use strict;
 use warnings;
-use Carp qw(carp);
+use Carp qw(carp cluck);
 
 =head1 NAME
 
@@ -46,12 +46,14 @@ default_view TT
                       user username
                       password password
         </connect_info>
+        instance_cache_key foo_bar_model_db
    </Model::DB>
 
    <View::TT>
         TEMPLATE_EXTENSION .tt
         WRAPPER            site-wrapper.tt
         INCLUDE_PATH       t/more_templates
+        instance_cache_key foo_bar_view_tt
    </View::TT>
 
  </foo.bar>
@@ -143,7 +145,7 @@ sub get_site_config {
     return $site_config;
 }
 
-=head1 get_component_config
+=head2 get_component_config
 
 return appropriate configuration for this component for this site
 
@@ -166,6 +168,41 @@ sub get_component_config {
     warn Dumper(component_config => $component_config);
 
     return $component_config;
+}
+
+=head2 get_from_instance_cache
+
+if (my $instance = $self->get_from_instance_cache($config)) {
+    return $instance;
+}
+
+=cut
+
+our $instances = {};
+
+sub get_from_instance_cache {
+    my ($self,$config) = @_;
+    my $instance_cache_key = $config->{instance_cache_key};
+    cluck "got instance_cache_key : $instance_cache_key \n";
+    my $instance;
+    if ($instance_cache_key && $instances->{$instance_cache_key}) {
+	$instance = $instances->{$instance_cache_key};
+    }
+    return $instance;
+}
+
+=head2 put_in_instance_cache
+
+   $self->put_in_instance_cache($config, $instance);
+
+=cut
+
+sub put_in_instance_cache {
+    my ($self,$config, $instance) = @_;
+    my $instance_cache_key = $config->{instance_cache_key};
+    return undef unless ($instance_cache_key);
+    $instances->{$instance_cache_key} = $instance;
+    return;
 }
 
 
