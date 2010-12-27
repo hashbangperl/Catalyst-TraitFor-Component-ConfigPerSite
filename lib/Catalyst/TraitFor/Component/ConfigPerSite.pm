@@ -77,8 +77,6 @@ my $cache = new Cache::SizeAwareMemoryCache( { 'namespace' => 'ConfigPerSite',
 					       'default_expires_in' => 600,
 					       'max_size' => 2000 } );
 
-use Data::Dumper;
-
 my $shared_config;
 
 has '_site_config' => ( is  => 'ro' );
@@ -156,17 +154,12 @@ my $config = $self->get_component_config;
 sub get_component_config {
     my ($self, $c) = @_;
     my $component_name = $self->catalyst_component_name;
-    warn "component name : $component_name\n";
 
     my $site_config = $self->get_site_config($c);
     my $appname = $site_config->{name}.'::';
     $component_name =~ s/$appname//;
-    warn Dumper(site_config => $site_config);
     my $component_config = $site_config->{$component_name};
     $component_config->{site_name} = $site_config->{site_name};
-
-    warn Dumper(component_config => $component_config);
-
     return $component_config;
 }
 
@@ -183,7 +176,6 @@ our $instances = {};
 sub get_from_instance_cache {
     my ($self,$config) = @_;
     my $instance_cache_key = $config->{instance_cache_key};
-    cluck "got instance_cache_key : $instance_cache_key \n";
     my $instance;
     if ($instance_cache_key && $instances->{$instance_cache_key}) {
 	$instance = $instances->{$instance_cache_key};
