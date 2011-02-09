@@ -7,6 +7,9 @@ t/02_pod.t
 t/03_pod_coverage.t
 t/another_site_blog.t
 t/simple_blog.t
+t/test2.db
+t/testblogapp.conf
+t/test.db
 t/templates/site-wrapper.tt
 t/templates/blog/view_year.tt
 t/templates/blog/view_post.tt

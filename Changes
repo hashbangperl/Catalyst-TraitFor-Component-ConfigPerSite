@@ -1,9 +1,14 @@
 Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite.
 
-0.02  Tue Nov 23
+0.03  9 Feb 2011
+       - added missing files for tests
+
+0.02  27 Dec 2010
        - now inherits top level configuration sections (but not configuration within sections)
        - replaced hardcoded/pattern matched component names in code
        - only get component configuration in components
+       first release to CPAN
+       Dedicated to Smylers
 
 0.01  Wed Nov 10 23:10:25 2010
 	- original version;
