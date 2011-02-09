@@ -67,7 +67,7 @@ Dedicated to Smylers who won the 2009 cryptic christmas crossword competition
 
 =cut
 
-our $VERSION = '0.0';
+our $VERSION = '0.03';
 
 use Moose::Role;
 use MRO::Compat;
