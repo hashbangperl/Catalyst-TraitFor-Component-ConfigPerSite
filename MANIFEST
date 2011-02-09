@@ -14,6 +14,11 @@ t/templates/site-wrapper.tt
 t/templates/blog/view_year.tt
 t/templates/blog/view_post.tt
 t/templates/blog/view_posts.tt
+t/more_templates/site-wrapper.tt
+t/more_templates/blog/
+t/more_templates/blog/view_posts.tt  
+t/more_templates/blog/view_post.tt  
+t/more_templates/blog/view_year.tt
 t/lib/TestBlogApp.pm
 t/lib/TestBlogApp/Schema.pm
 t/lib/TestBlogApp/Controller/Blog.pm
