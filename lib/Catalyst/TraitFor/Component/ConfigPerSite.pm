@@ -16,48 +16,48 @@ Compose this role into your trait to extend a catalyst component such as a model
 
 =head1 SYNOPSIS
 
-in testblogapp.conf:
+    in testblogapp.conf:
 
-name   TestBlogApp
-site_name    TestBlog
-default_view TT
+    name         TestBlogApp
+    site_name    TestBlog
+    default_view TT
 
-<Model::DB>
+    <Model::DB>
         schema_class TestBlogApp::Schema
         <connect_info>
-                      dsn dbi:SQLite:dbname=t/test.db
-                      user username
-                      password password
+            dsn dbi:SQLite:dbname=t/test.db
+            user username
+            password password
         </connect_info>
-</Model::DB>
+    </Model::DB>
 
-<View::TT>
+    <View::TT>
         TEMPLATE_EXTENSION .tt
         WRAPPER            site-wrapper.tt
         INCLUDE_PATH       t/templates
-</View::TT>
+    </View::TT>
 
-<TraitFor::Component::ConfigPerSite>
- <foo.bar>
-   <Model::DB>
-        schema_class TestBlogApp::Schema
-        <connect_info>
-                      dsn dbi:SQLite:dbname=t/test2.db
-                      user username
-                      password password
-        </connect_info>
-        instance_cache_key foo_bar_model_db
-   </Model::DB>
+    <TraitFor::Component::ConfigPerSite>
+        <foo.bar>
+            <Model::DB>
+                schema_class TestBlogApp::Schema
+                <connect_info>
+                    dsn dbi:SQLite:dbname=t/test2.db
+                    user username
+                    password password
+                </connect_info>
+                instance_cache_key foo_bar_model_db
+            </Model::DB>
 
-   <View::TT>
-        TEMPLATE_EXTENSION .tt
-        WRAPPER            site-wrapper.tt
-        INCLUDE_PATH       t/more_templates
-        instance_cache_key foo_bar_view_tt
-   </View::TT>
+            <View::TT>
+                TEMPLATE_EXTENSION .tt
+                WRAPPER            site-wrapper.tt
+                INCLUDE_PATH       t/more_templates
+                instance_cache_key foo_bar_view_tt
+            </View::TT>
 
- </foo.bar>
-</TraitFor::Component::ConfigPerSite>
+        </foo.bar>
+    </TraitFor::Component::ConfigPerSite>
 
 =head1 VERSION
 
@@ -89,7 +89,7 @@ has '_site_config' => ( is  => 'ro' );
 
 return (possibly cached) site-specific configuration based on host and path for this request
 
-my $site_config = $self->get_site_config($c);
+    my $site_config = $self->get_site_config($c);
 
 =cut
 
@@ -149,7 +149,7 @@ sub get_site_config {
 
 return appropriate configuration for this component for this site
 
-my $config = $self->get_component_config;
+    my $config = $self->get_component_config;
 
 =cut
 
@@ -167,9 +167,9 @@ sub get_component_config {
 
 =head2 get_from_instance_cache
 
-if (my $instance = $self->get_from_instance_cache($config)) {
-    return $instance;
-}
+    if (my $instance = $self->get_from_instance_cache($config)) {
+        return $instance;
+    }
 
 =cut
 
@@ -187,7 +187,7 @@ sub get_from_instance_cache {
 
 =head2 put_in_instance_cache
 
-   $self->put_in_instance_cache($config, $instance);
+    $self->put_in_instance_cache($config, $instance);
 
 =cut
 
