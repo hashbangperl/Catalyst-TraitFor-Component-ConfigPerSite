@@ -8,13 +8,13 @@ Catalyst::TraitFor::Model::DBIC::ConfigPerSite - Extend Catalyst DBIC Model to w
 
 =head1 SYNOPSIS
 
-package MyApp::Model::DBIC;
+    package MyApp::Model::DBIC;
 
-use Moose;
+    use Moose;
 
-extends 'Catalyst::Model::DBIC::Schema'; 
+    extends 'Catalyst::Model::DBIC::Schema'; 
 
-with qw(Catalyst::TraitFor::Model::DBIC::ConfigPerSite);
+    with qw(Catalyst::TraitFor::Model::DBIC::ConfigPerSite);
 
 =head1 DESCRIPTION
 
