@@ -8,13 +8,13 @@ Catalyst::TraitFor::View::TT::ConfigPerSite - Extend Catalyst TT View to work wi
 
 =head1 SYNOPSIS
 
-package MyApp::View::TT;
+    package MyApp::View::TT;
 
-use Moose;
+    use Moose;
 
-extends 'Catalyst::View::TT'; 
+    extends 'Catalyst::View::TT'; 
 
-with qw(Catalyst::TraitFor::View::TT::ConfigPerSite);
+    with qw(Catalyst::TraitFor::View::TT::ConfigPerSite);
 
 =head1 DESCRIPTION
 
