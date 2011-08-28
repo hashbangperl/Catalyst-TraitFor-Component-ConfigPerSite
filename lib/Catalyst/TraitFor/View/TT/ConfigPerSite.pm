@@ -37,6 +37,7 @@ use Data::Dumper;
 
 sub build_per_context_instance {
     my ($self,$c,%args) = @_;
+    return $_[0] unless ref($_[1]);
     my $config = $self->get_component_config($c);
 
 
