@@ -2,6 +2,7 @@ Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite
 
 0.04  28 August 2011
        - removed old files from MANIFEST
+       - Pod indentation fixes from Christiaan Kras
 
 0.03  9 Feb 2011
        - added missing files for tests
