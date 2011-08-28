@@ -61,13 +61,11 @@ default_view TT
 
 =head1 VERSION
 
-0.03
-
-Dedicated to Smylers who won the 2009 cryptic christmas crossword competition
+0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use Moose::Role;
 use MRO::Compat;
@@ -95,18 +93,28 @@ my $site_config = $self->get_site_config($c);
 
 sub get_site_config {
     my ($self, $c) = @_;
+    carp "_get_site_config called ", caller();
 
     $shared_config ||= $c->config->{'TraitFor::Component::ConfigPerSite'};
+
+    warn Dumper(shared_config => $shared_config);
+
+    warn "getting request .. ";
 
     # get configuration from host and/or path
     my $req = $c->request;
     my $host = $req->uri->host;
     my $path = $req->uri->path;
 
+    warn "got request : $req $host $path\n";
+
     my $cache_key = $host.$path;
     my $site_config = $cache->get( $cache_key );
 
+#    warn Dumper(cached_site_config => $site_config);
+
     if ( not defined $site_config ) {
+	warn Dumper(site_config => $site_config);
 	if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
 	    if (scalar keys %$host_config > 1) {
 		my @path_parts = split(/\/+/, $path);
@@ -130,6 +138,8 @@ sub get_site_config {
 		}
 	    }
 
+	    warn Dumper(site_config => $site_config);
+
 	} else {
 	    # if none found fall back to top level config for DBIC, and warn
 	    $site_config = { site_name => 'top_level_fallback', %{$c->config} };
@@ -139,6 +149,8 @@ sub get_site_config {
 
 
 	$cache->set( $cache_key, $site_config, "10 minutes" );
+    } else {
+	warn "no matching site config!\n";
     }
 
 
@@ -155,13 +167,19 @@ my $config = $self->get_component_config;
 
 sub get_component_config {
     my ($self, $c) = @_;
+    cluck "get_component_config called with context $c";
+    warn Dumper(context => $c);
     my $component_name = $self->catalyst_component_name;
+    warn "component name : $component_name\n";
 
     my $site_config = $self->get_site_config($c);
     my $appname = $site_config->{name}.'::';
+    warn "appname : $appname\n";
     $component_name =~ s/$appname//;
+    warn "component_name : $component_name\n";
     my $component_config = $site_config->{$component_name};
     $component_config->{site_name} = $site_config->{site_name};
+    warn "site name ", $site_config->{site_name}, "\n";
     return $component_config;
 }
 
