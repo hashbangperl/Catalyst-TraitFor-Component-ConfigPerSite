@@ -33,22 +33,29 @@ with qw( Catalyst::Component::InstancePerContext Catalyst::TraitFor::Component::
 
 sub build_per_context_instance {
     my ($self, $c) = @_;
+    return $_[0] unless ref($_[1]);
     my $config = $self->get_component_config($c);
 
     if (my $instance = $self->get_from_instance_cache($config)) {
 	return $instance;
     }
 
+    use Data::Dumper;
+    warn Dumper (instance_config=>$config);
+
     my @connect_info = ( @{$config->{connect_info}}{qw/dsn user password/});
+
     my $new = bless({ %$self }, ref($self));
     $new->config($config);
     $new->schema($self->schema->connect(@connect_info));
+
+#    my $new =  Catalyst::Model::DBIC::Schema->new({connect_info => \@connect_info, schema_class => $config->{schema_class} }  );
+    $new->config($config);
 
     $self->put_in_instance_cache($config, $new);
 
     return $new;
 }
-
 
 =head1 SEE ALSO
 
