@@ -1,7 +1,11 @@
 Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite.
 
+0.04  28 August 2011
+       - removed old files from MANIFEST
+
 0.03  9 Feb 2011
        - added missing files for tests
+       - Dedicated to Smyler(s) who won the 2009 London.pm Christmas Cryptic Crossword
 
 0.02  27 Dec 2010
        - now inherits top level configuration sections (but not configuration within sections)
