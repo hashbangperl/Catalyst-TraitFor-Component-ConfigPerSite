@@ -3,8 +3,6 @@ use strict;
 
 use Moose;
 
-extends 'Catalyst::Model::DBIC::Schema'; 
-with qw(Catalyst::TraitFor::Model::DBIC::ConfigPerSite);
-
+extends 'Catalyst::Model::DBIC::ConfigPerSite';
 
 1;
