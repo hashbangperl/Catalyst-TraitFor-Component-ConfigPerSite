@@ -17,11 +17,8 @@ has '+schema_class' => (
 );
 
 
-sub BUILD {
-    warn join ', ', @_;
-    my $self;
+after BUILD => sub {
     warn "BUILD called\n";
-    $self->SUPER::BUILD();
-}
+};
 
 1;

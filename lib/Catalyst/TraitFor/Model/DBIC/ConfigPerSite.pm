@@ -37,7 +37,7 @@ sub build_per_context_instance {
     my $config = $self->get_component_config($c);
 
     if (my $instance = $self->get_from_instance_cache($config)) {
-	return $instance;
+	    return $instance;
     }
 
     use Data::Dumper;
