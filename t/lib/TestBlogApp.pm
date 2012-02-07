@@ -7,7 +7,11 @@ use Catalyst qw/
 	Static::Simple	
 /;
 
-__PACKAGE__->config( 'Plugin::ConfigLoader' => { file => 't/testblogapp.conf' } );
+__PACKAGE__->config(
+    'Plugin::ConfigLoader' => {
+        file => __PACKAGE__->path_to('../../testblogapp.conf'),
+     },
+);
 
 
 # Start the application
