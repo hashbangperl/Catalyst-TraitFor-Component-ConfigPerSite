@@ -21,13 +21,11 @@ unless(ok($r->is_success, 'got main blog page ok')) {
     }
 }
 
-title_matches($r,qr/et another/,'title matches');
+title_matches($r,qr/Yet\sAnother\sBlog\s\(too\)/,'title matches');
 
 tag_matches($r, 'p', { _content => qr/let you do that/ }, 'main content appears as expected' );
 
-warn "\ncontent : \n", $r->content, "\n\n";
-
 no_tag($r, 'div', { class => 'error' }, 'no unexpected errors' );
 
-done_ok();
+done_testing();
 #note "content : \n--------------------------------\n", $r->content, "\n-----------------------------------------\n";
