@@ -71,11 +71,7 @@ use Moose::Role;
 use MRO::Compat;
 use Data::Dumper;
 
-use Cache::SizeAwareMemoryCache;
-
-my $cache = new Cache::SizeAwareMemoryCache( { 'namespace' => 'ConfigPerSite',
-					       'default_expires_in' => 600,
-					       'max_size' => 2000 } );
+my $site_config_cache = { };
 
 my $shared_config;
 
@@ -93,28 +89,18 @@ return (possibly cached) site-specific configuration based on host and path for 
 
 sub get_site_config {
     my ($self, $c) = @_;
-    carp "_get_site_config called ", caller();
 
     $shared_config ||= $c->config->{'TraitFor::Component::ConfigPerSite'};
-
-    warn Dumper(shared_config => $shared_config);
-
-    warn "getting request .. ";
 
     # get configuration from host and/or path
     my $req = $c->request;
     my $host = $req->uri->host;
     my $path = $req->uri->path;
 
-    warn "got request : $req $host $path\n";
-
     my $cache_key = $host.$path;
-    my $site_config = $cache->get( $cache_key );
-
-#    warn Dumper(cached_site_config => $site_config);
+    my $site_config = $site_config_cache->{$cache_key};
 
     if ( not defined $site_config ) {
-	warn Dumper(site_config => $site_config);
 	if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
 	    if (scalar keys %$host_config > 1) {
 		my @path_parts = split(/\/+/, $path);
@@ -138,8 +124,6 @@ sub get_site_config {
 		}
 	    }
 
-	    warn Dumper(site_config => $site_config);
-
 	} else {
 	    # if none found fall back to top level config for DBIC, and warn
 	    $site_config = { site_name => 'top_level_fallback', %{$c->config} };
@@ -148,9 +132,9 @@ sub get_site_config {
 
 
 
-	$cache->set( $cache_key, $site_config, "10 minutes" );
+	$site_config_cache->{$cache_key} = $site_config;
     } else {
-	warn "no matching site config!\n";
+	carp "no matching site config!\n";
     }
 
 
@@ -167,19 +151,13 @@ return appropriate configuration for this component for this site
 
 sub get_component_config {
     my ($self, $c) = @_;
-    cluck "get_component_config called with context $c";
-    warn Dumper(context => $c);
-    my $component_name = $self->catalyst_component_name;
-    warn "component name : $component_name\n";
 
+    my $component_name = $self->catalyst_component_name;
     my $site_config = $self->get_site_config($c);
     my $appname = $site_config->{name}.'::';
-    warn "appname : $appname\n";
     $component_name =~ s/$appname//;
-    warn "component_name : $component_name\n";
     my $component_config = $site_config->{$component_name};
     $component_config->{site_name} = $site_config->{site_name};
-    warn "site name ", $site_config->{site_name}, "\n";
     return $component_config;
 }
 
@@ -232,7 +210,7 @@ Aaron Trevena, E<lt>aaron@aarontrevena.co.ukE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010 by Aaron Trevena
+Copyright (C) 2010,2011 by Aaron Trevena
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,
