@@ -7,7 +7,6 @@ WriteMakefile(
     PREREQ_PM         => {
 			  Catalyst => 0,
 			  Moose => 0,
-			  Cache::Cache => 0,
 			  Test::Pod => 0,
 			  Test::Pod::Coverage => 0,
 			  Test::HTML::Form => 0,
