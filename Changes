@@ -2,8 +2,8 @@ Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite
 
 0.05  28 Feb 2010
        - cleaned up code
-       - added example scripts
-       - fixed paths in config
+       - added example scripts (incl patch from Tomas Doran)
+       - fixed paths in config (patch from Tomas Doran)
        - added test for 3rd site
        - added pod
 
