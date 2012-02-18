@@ -25,7 +25,7 @@ title_matches($r,qr/A\sN\sOther/,'title matches');
 
 tag_matches($r, 'p', { _content => qr/The\sclock\sstruck\s13/ }, 'main content appears as expected' );
 
-warn "\ncontent : \n", $r->content, "\n\n";
+#warn "\ncontent : \n", $r->content, "\n\n";
 
 no_tag($r, 'div', { class => 'error' }, 'no unexpected errors' );
 
