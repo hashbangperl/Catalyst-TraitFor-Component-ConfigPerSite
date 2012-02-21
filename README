@@ -19,7 +19,6 @@ This module requires these other modules and libraries:
 
   Moose
   Catalyst
-  Cache::Cache
 
 COPYRIGHT AND LICENCE
 
