@@ -6,6 +6,7 @@ WriteMakefile(
     VERSION_FROM      => 'lib/Catalyst/TraitFor/Component/ConfigPerSite.pm', # finds $VERSION
     PREREQ_PM         => {
 			  Catalyst => 0,
+			  Catalyst::Plugin::Static::Simple => 0,
 			  Moose => 0,
 			  Test::Pod => 0,
 			  Test::Pod::Coverage => 0,
