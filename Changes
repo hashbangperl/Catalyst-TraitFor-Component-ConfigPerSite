@@ -1,6 +1,9 @@
 Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite.
 
-0.05  28 Feb 2010
+0.06  14 Mar 2012
+       - updated Makefile.PL with required module for testing
+
+0.05  28 Feb 2012
        - cleaned up code
        - added example scripts (incl patch from Tomas Doran)
        - fixed paths in config (patch from Tomas Doran)
