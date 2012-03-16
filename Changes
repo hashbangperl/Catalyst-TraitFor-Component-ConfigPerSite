@@ -1,5 +1,8 @@
 Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite.
 
+0.07  16 Mar 2012
+       - added hopefully the last missing pre-reqs to Makefile.PL
+
 0.06  14 Mar 2012
        - updated Makefile.PL with required module for testing
 

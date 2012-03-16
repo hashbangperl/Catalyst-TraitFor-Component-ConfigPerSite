@@ -7,6 +7,9 @@ WriteMakefile(
     PREREQ_PM         => {
 			  Catalyst => 0,
 			  Catalyst::Plugin::Static::Simple => 0,
+			  Catalyst::Plugin::ConfigLoader => 0,
+			  Catalyst::View::TT => 0,
+			  Catalyst::Model::DBIC::Schema => 0,
 			  Moose => 0,
 			  Test::Pod => 0,
 			  Test::Pod::Coverage => 0,

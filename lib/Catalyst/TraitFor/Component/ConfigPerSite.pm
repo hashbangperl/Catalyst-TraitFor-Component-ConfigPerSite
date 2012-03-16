@@ -61,11 +61,11 @@ Compose this role into your trait to extend a catalyst component such as a model
 
 =head1 VERSION
 
-0.06
+0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use Moose::Role;
 use MRO::Compat;
