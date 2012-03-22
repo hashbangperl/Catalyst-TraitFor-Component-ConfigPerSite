@@ -2,6 +2,8 @@ Changes
 Makefile.PL
 MANIFEST
 README
+MYMETA.json
+MYMETA.yml
 t/01_basic.t
 t/02_pod.t
 t/03_pod_coverage.t
