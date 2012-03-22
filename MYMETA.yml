@@ -23,8 +23,10 @@ requires:
   Catalyst::Plugin::ConfigLoader: 0
   Catalyst::Plugin::Static::Simple: 0
   Catalyst::View::TT: 0
+  Config::General: 0
+  DBIx::Class::TimeStamp: 0
   Moose: 0
   Test::HTML::Form: 0
   Test::Pod: 0
   Test::Pod::Coverage: 0
-version: 0.07
+version: 0.08
