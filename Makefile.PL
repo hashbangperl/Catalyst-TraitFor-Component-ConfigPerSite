@@ -14,6 +14,8 @@ WriteMakefile(
 			  Test::Pod => 0,
 			  Test::Pod::Coverage => 0,
 			  Test::HTML::Form => 0,
+			  Config::General => 0,
+        		 'DBIx::Class::TimeStamp' => '0',
                          }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
        (AUTHOR         => 'Aaron Trevena <teejay@cpan.org>') : ()),
