@@ -25,8 +25,9 @@ requires:
   Catalyst::View::TT: 0
   Config::General: 0
   DBIx::Class::TimeStamp: 0
+  DateTime: 0
   Moose: 0
   Test::HTML::Form: 0
   Test::Pod: 0
   Test::Pod::Coverage: 0
-version: 0.08
+version: 0.09
