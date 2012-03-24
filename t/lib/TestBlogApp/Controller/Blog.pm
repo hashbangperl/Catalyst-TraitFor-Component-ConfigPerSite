@@ -2,8 +2,8 @@ package TestBlogApp::Controller::Blog;
 use strict;
 use base 'Catalyst::Controller';
 
-use XML::Feed;
 use Encode;
+use DateTime;
 
 =head1 NAME
 
