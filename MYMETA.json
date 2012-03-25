@@ -33,6 +33,7 @@
       "runtime" : {
          "requires" : {
             "Catalyst" : 0,
+            "Catalyst::Action::RenderView" : 0,
             "Catalyst::Model::DBIC::Schema" : 0,
             "Catalyst::Plugin::ConfigLoader" : 0,
             "Catalyst::Plugin::Static::Simple" : 0,
@@ -48,5 +49,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.09"
+   "version" : "0.10"
 }

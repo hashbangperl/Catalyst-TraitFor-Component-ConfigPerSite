@@ -19,6 +19,7 @@ no_index:
     - inc
 requires:
   Catalyst: 0
+  Catalyst::Action::RenderView: 0
   Catalyst::Model::DBIC::Schema: 0
   Catalyst::Plugin::ConfigLoader: 0
   Catalyst::Plugin::Static::Simple: 0
@@ -30,4 +31,4 @@ requires:
   Test::HTML::Form: 0
   Test::Pod: 0
   Test::Pod::Coverage: 0
-version: 0.09
+version: 0.10
