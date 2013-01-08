@@ -12,7 +12,7 @@ Catalyst::TraitFor::View::TT::ConfigPerSite - Extend Catalyst TT View to work wi
 
     use Moose;
 
-    extends 'Catalyst::View::TT'; 
+    extends 'Catalyst::View::TT';
 
     with qw(Catalyst::TraitFor::View::TT::ConfigPerSite);
 
@@ -38,14 +38,16 @@ use Data::Dumper;
 sub build_per_context_instance {
     my ($self,$c,%args) = @_;
     return $_[0] unless ref($_[1]);
+
     my $config = $self->get_component_config($c);
 
+    warn Dumper( TT_CONFIG => $config );
 
     if (my $instance = $self->get_from_instance_cache($config)) {
 	return $instance;
     }
 
-    # Slightly evil - we use hash/array flattening side-effect in TT View constructor to inject/overwrite with site specific config 
+    # Slightly evil - we use hash/array flattening side-effect in TT View constructor to inject/overwrite with site specific config
     foreach my $key ( keys %$config ) {
 	next if ($key eq 'site_name');
 	$args{$key} = $config->{$key};
@@ -53,7 +55,7 @@ sub build_per_context_instance {
 
     my $new = $self->new($c, \%args);
 
-    $self->put_in_instance_cache($config, $new);    
+    $self->put_in_instance_cache($config, $new);
 
     return $new;
 }
@@ -70,7 +72,7 @@ Aaron Trevena, E<lt>aaron@aarontrevena.co.ukE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010 by Aaron Trevena
+Copyright (C) 2010-2013 by Aaron Trevena
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.10.0 or,

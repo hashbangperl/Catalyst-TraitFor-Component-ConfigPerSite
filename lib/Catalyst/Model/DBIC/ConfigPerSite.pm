@@ -72,7 +72,7 @@ sub build_per_context_instance {
 
 =head1 COPYRIGHT AND LICENSE
 
- Copyright (C) 2010 by Aaron Trevena
+ Copyright (C) 2010-2013 by Aaron Trevena
 
  This library is free software; you can redistribute it and/or
  it under the same terms as Perl itself, either Perl version 5
