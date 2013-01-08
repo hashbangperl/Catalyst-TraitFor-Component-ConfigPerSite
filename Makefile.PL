@@ -21,4 +21,11 @@ WriteMakefile(
                          }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
        (AUTHOR         => 'Aaron Trevena <teejay@cpan.org>') : ()),
+    META_MERGE => {
+     resources => {
+       repository => 'https://github.com/hashbangperl/Catalyst-TraitFor-Component-ConfigPerSite',
+    },
+   },
+   ($ExtUtils::MakeMaker::VERSION >= 6.3002 ? ('LICENSE'  => 'perl', ) : ()),
+
 );
