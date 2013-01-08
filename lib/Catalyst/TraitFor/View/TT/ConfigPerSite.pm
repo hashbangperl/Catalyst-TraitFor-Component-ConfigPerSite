@@ -41,8 +41,6 @@ sub build_per_context_instance {
 
     my $config = $self->get_component_config($c);
 
-    warn Dumper( TT_CONFIG => $config );
-
     if (my $instance = $self->get_from_instance_cache($config)) {
 	return $instance;
     }

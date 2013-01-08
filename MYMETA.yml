@@ -33,4 +33,4 @@ requires:
   Test::Pod::Coverage: 0
 resources:
   repository: https://github.com/hashbangperl/Catalyst-TraitFor-Component-ConfigPerSite
-version: 0.10
+version: 0.11
