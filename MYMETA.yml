@@ -7,8 +7,8 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 0
 dynamic_config: 0
-generated_by: 'ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.112150'
-license: unknown
+generated_by: 'ExtUtils::MakeMaker version 6.62, CPAN::Meta::Converter version 2.120921'
+license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -31,4 +31,6 @@ requires:
   Test::HTML::Form: 0
   Test::Pod: 0
   Test::Pod::Coverage: 0
+resources:
+  repository: https://github.com/hashbangperl/Catalyst-TraitFor-Component-ConfigPerSite
 version: 0.10
