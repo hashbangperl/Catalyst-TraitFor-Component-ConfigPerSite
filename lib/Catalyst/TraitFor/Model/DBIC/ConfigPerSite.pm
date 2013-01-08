@@ -12,7 +12,7 @@ Catalyst::TraitFor::Model::DBIC::ConfigPerSite - Extend Catalyst DBIC Model to w
 
     use Moose;
 
-    extends 'Catalyst::Model::DBIC::Schema'; 
+    extends 'Catalyst::Model::DBIC::Schema';
 
     with qw(Catalyst::TraitFor::Model::DBIC::ConfigPerSite);
 

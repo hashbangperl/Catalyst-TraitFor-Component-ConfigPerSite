@@ -9,6 +9,7 @@ t/02_pod.t
 t/03_pod_coverage.t
 t/another_site_blog.t
 t/simple_blog.t
+t/just_the_one.t
 t/test2.db
 t/testblogapp.conf
 t/test.db

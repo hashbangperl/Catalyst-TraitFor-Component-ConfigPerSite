@@ -102,7 +102,7 @@ sub get_site_config {
 
     if ( not defined $site_config ) {
         if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
-            if (scalar keys %$host_config > 1) {
+            if (scalar keys %$host_config >= 1) {
                 my @path_parts = split(/\/+/, $path);
                 while (my $last_path_part = pop(@path_parts)) {
                     my $match_path = join ('/',@path_parts,$last_path_part);
