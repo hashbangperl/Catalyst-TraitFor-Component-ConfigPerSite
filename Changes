@@ -1,4 +1,6 @@
 Revision history for Perl extension Catalyst::TraitFor::Component::ConfigPerSite.
+0.10  8 Jan 2013
+	Added repo and license metadata, cleaned up whitespace
 
 0.10  25 March 2012
 	yet another test prereq
