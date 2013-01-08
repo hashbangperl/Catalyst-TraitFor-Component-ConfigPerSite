@@ -101,42 +101,37 @@ sub get_site_config {
     my $site_config = $site_config_cache->{$cache_key};
 
     if ( not defined $site_config ) {
-	if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
-	    if (scalar keys %$host_config > 1) {
-		my @path_parts = split(/\/+/, $path);
-		while (my $last_path_part = pop(@path_parts)) {
-		    my $match_path = join ('/',@path_parts,$last_path_part);
-		    if ( $site_config = $host_config->{"/$match_path"} || $host_config->{"$match_path"}) {
-			last;
-		    }
-		}
-		$site_config ||= $host_config->{ALL} || $host_config;
-	    } else {
-		($site_config) = values %$host_config;
-	    }
-	    $site_config->{site_name} = "host:$host";
+        if (my $host_config = $shared_config->{$host} || $shared_config->{ALL}) {
+            if (scalar keys %$host_config > 1) {
+                my @path_parts = split(/\/+/, $path);
+                while (my $last_path_part = pop(@path_parts)) {
+                    my $match_path = join ('/',@path_parts,$last_path_part);
+                    if ( $site_config = $host_config->{"/$match_path"} || $host_config->{"$match_path"}) {
+                        last;
+                    }
+                }
+                $site_config ||= $host_config->{ALL} || $host_config;
+            } else {
+                ($site_config) = values %$host_config;
+            }
+            $site_config->{site_name} = "host:$host";
 
-	    # inherit top level config where not over-ridden
-	    my $top_level_config = $c->config;
-	    foreach my $key (keys %$top_level_config) {
-		unless (defined $site_config->{$key}) {
-		    $site_config->{$key} = $top_level_config->{$key};
-		}
-	    }
+            # inherit top level config where not over-ridden
+            my $top_level_config = $c->config;
+            foreach my $key (keys %$top_level_config) {
+                unless (defined $site_config->{$key}) {
+                    $site_config->{$key} = $top_level_config->{$key};
+                }
+            }
 
-	} else {
-	    # if none found fall back to top level config for DBIC, and warn
-	    $site_config = { site_name => 'top_level_fallback', %{$c->config} };
-	    carp "falling back to top level config" if ($c->debug);
-	}
+        } else {
+            # if none found fall back to top level config for DBIC, and warn
+            $site_config = { site_name => 'top_level_fallback', %{$c->config} };
+            carp "falling back to top level config" if ($c->debug);
+        }
 
-
-
-	$site_config_cache->{$cache_key} = $site_config;
-    } else {
-	carp "no matching site config!\n";
+        $site_config_cache->{$cache_key} = $site_config;
     }
-
 
     return $site_config;
 }
