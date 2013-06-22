@@ -37,14 +37,12 @@ sub build_per_context_instance {
     my $config = $self->get_component_config($c);
 
     if (my $instance = $self->get_from_instance_cache($config)) {
-	    return $instance;
+        return $instance;
     }
-
-    my @connect_info = ( @{$config->{connect_info}}{qw/dsn user password/});
 
     my $new = bless({ %$self }, ref($self));
     $new->config($config);
-    $new->schema($self->schema->connect(@connect_info));
+    $new->schema($self->schema->connect($config->{connect_info}));
 
     $self->put_in_instance_cache($config, $new);
 
